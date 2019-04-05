@@ -30,12 +30,36 @@ public class Path {
      * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
      *         consecutive nodes in the list are not connected in the graph.
      * 
-     * @deprecated Need to be implemented.
      */
     public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
+    	
+    	if ((graph.size()==0)){
+    		throw new IllegalArgumentException("Graphe vide");
+    	}
+    	
         List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
+        if (nodes.size()==1){
+        	return new Path(graph, nodes.get(0));
+        }
+        
+        for (int i=0;i< nodes.size()-1;i++) {
+        	List<Arc> successors = nodes.get(i).getSuccessors();
+        	Arc shortest = null;
+        	double traveltime = Double.MAX_VALUE ;
+        	for (int k=0; k<successors.size(); k++) {
+        		if (successors.get(k).getDestination()==nodes.get(i+1)) {
+        			if (successors.get(k).getMinimumTravelTime() < traveltime) {
+        				shortest=successors.get(k);
+        				traveltime=shortest.getMinimumTravelTime();
+        			}
+        		}
+        	}
+        	if (shortest == null){
+        		throw new IllegalArgumentException("deux noeuds pas reliés");
+        	}
+        	arcs.add(shortest);
+        }
         return new Path(graph, arcs);
     }
 
@@ -202,7 +226,7 @@ public class Path {
     public boolean isValid() {
         boolean valid = false;
         if (this.isEmpty()) valid = true;
-        else if ((this.size()== 0) && (this.getOrigin().getId()!=0))valid = true;
+        else if ((this.size()== 1)) valid = true;
         else {
         	List<Arc> list = this.getArcs();
         	if (list.get(0).getOrigin() == this.getOrigin()){
