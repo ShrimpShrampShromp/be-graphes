@@ -144,28 +144,28 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
 
     @Override
     public void remove(E x) throws ElementNotFoundException {
+    	int index;
+    	int indexLast;
+    	E lastElement;
         if (isEmpty())
             throw new ElementNotFoundException("empty array");
-        int index=0;
-        boolean trouve=false;
-        while ((trouve==false) && (index<this.currentSize)) {
-        	if (this.array.get(index)==x) {
-        		trouve=true;
-        	}
-        	else {
-        		index++;
-        	}
-        }
-        if (!trouve) throw new ElementNotFoundException("Element not found"); 
         else {
-        	if (((((((((((((((((index==this.currentSize))))))))))))))))) {
-        		arraySet(index,null);
+        	index = this.array.indexOf(x);
+        	/* Si l'élément n'a pas été trouvé */
+        	if (index == -1 || index >= this.currentSize) {
+        		throw new ElementNotFoundException(x);
         	}
+        	/* Si l'élément a été trouvé, on le DELETE */
         	else {
-        		arraySet(index, this.array.get(currentSize));
-        		this.currentSize--;
-        		if (this.array.get(index).equals(this.array.get(index_parent(index)))) percolateUp(index);
-        		else percolateDown(index);
+        		// PAF on fait un gros size-- sur l'arbre et on récupère l'index du nouveau dernier élément
+        		indexLast=--this.currentSize;
+        		/* Si l'élément supprimé n'etait pas le dernier */
+        		if (indexLast>index) {
+	        		lastElement = this.array.get(indexLast);
+	        		this.array.set(index, lastElement);
+	        		this.percolateDown(index);
+	        		this.percolateUp(index);	        		
+        		}
         	}
         }
     }
