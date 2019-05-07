@@ -1,7 +1,7 @@
 package org.insa.graph;
 import org.insa.algo.utils.*;
 
-public class Label{
+public class Label implements Comparable<Label>{
 	private Node currentNode;
 	private boolean marked;
 	protected double cost;
@@ -22,6 +22,10 @@ public class Label{
 		return this.currentNode;
 	}
 	
+	public Node getPrevious() {
+		return this.previousNode;
+	}
+	
 	public void setMark(boolean b) {
 		this.marked = b;
 	}
@@ -36,5 +40,9 @@ public class Label{
 	
 	public boolean isMarked() {
 		return this.marked;
+	}
+	
+	public int compareTo(Label L) {
+		return (int)(this.cost - L.getCost());
 	}
 }

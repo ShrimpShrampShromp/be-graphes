@@ -21,50 +21,91 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     
     @Override
     protected ShortestPathSolution doRun() {
+    	
+    	//retrieve graph
         ShortestPathData data = getInputData();
         Graph graph = data.getGraph();
-        ShortestPathSolution solution = null;
-        int tailleGraphe = graph.size();
         
-        boolean fin = false;
         
-        List<Label> labels = new ArrayList<Label>();
+        final int tailleGraphe = graph.size();
+       
+       //Tableau de labels pour les modifier, tas de labels pour dérouler l'algo 
         List<Node> predecessors = graph.getNodes();
-        BinaryHeap<Node> tas = new BinaryHeap<Node>();
+        ArrayList<Label> labels = new ArrayList<Label>();
+        BinaryHeap<Label> tas = new BinaryHeap<Label>();
+        
         Node startingNode = data.getOrigin();
+        Node destNode = data.getDestination();
+        
+        //initialize label array
         
         for (int i = 0; i<tailleGraphe; i++) {
         	Node n = graph.getNodes().get(i);
-        	labels.set(n.getId(), new Label(n));
+        	labels.add(i, new Label(n));
+        	tas.insert(new Label(n));
         }
         
         //initialisation du sommet du tas
-        labels.get(startingNode.getId()).setCost(0);
-        
-        tas.insert(startingNode);
         Label startingLabel = new Label(startingNode);
-        Label tempLabel = startingLabel;
-        Node tempNode = startingLabel.getNode();
+        startingLabel.setCost(0);
+        tas.insert(startingLabel);
         
-        while (!tempLabel.isMarked() && !fin) {
-        	tempLabel = labels.get(tas.findMin().getId());
-        	tempLabel.setMark(true);
-        	tempNode = tempLabel.getNode();
-        	for (Arc arc : tempNode.getSuccessors()) {
-        		Label Successor = labels.get(arc.getDestination().getId());
-        		if (!Successor.isMarked()) {
-        			double cout = Math.min(Successor.getCost(), tempLabel.getCost() + arc.getLength());
-        			if (cout != Successor.getCost()) {
-            			Successor.setCost(cout);
-            			tas.insert(Successor.getNode());
-            			tempLabel.setPrevious(arc.getOrigin());
-        			}
+        //actual algorithm
+        
+        boolean fin = false;
+        Label currentLabel, nextLabel;
+        while (!tas.isEmpty() && !fin) {
+        	
+        	currentLabel = tas.deleteMin();
+        	currentLabel.setMark(true);
+        	
+        	for (Arc arc : currentLabel.getNode().getSuccessors()) {
+        		int nextId = arc.getDestination().getId();
+        		nextLabel = labels.get(nextId);
+        		if (nextLabel.isMarked()) {
+        			continue;
         		}
+        		
+        		double cout = Math.min(nextLabel.getCost(), currentLabel.getCost() + arc.getLength());
+        		
+        		if (cout != nextLabel.getCost()) {
+            			nextLabel.setCost(cout);
+            			nextLabel.setPrevious(arc.getOrigin());
+            			labels.set(nextId, nextLabel);
+            			tas.insert(nextLabel);
+        		}
+        		
+        		//if on a atteint la destination then fin = true
         	}
-        	//c'est pas exactement ça mais on fait la même fin que sur l'algo bellmanfordalgo
-        	predecessors.add(tempLabel.getNode());
+        }
+        ShortestPathSolution solution = null;
+
+        // Destination has no predecessor, the solution is infeasible...
+        if (labels.get(destNode.getId()).getPrevious() == null) {
+            solution = new ShortestPathSolution(data, Status.INFEASIBLE);
         }
         
+        //faut reprendre à partir d'ici : c'est la fin de bellman ford faut juste un peu modifier
+        
+        else {
+
+            // The destination has been found, notify the observers.
+            notifyDestinationReached(data.getDestination());
+
+            // Create the path from the array of predecessors...
+            ArrayList<Arc> arcs = new ArrayList<>();
+            Arc arc = predecessorArcs[data.getDestination().getId()];
+            while (arc != null) {
+                arcs.add(arc);
+                arc = predecessorArcs[arc.getOrigin().getId()];
+            }
+
+            // Reverse the path...
+            Collections.reverse(arcs);
+
+            // Create the final solution.
+            solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
+        }    
         return solution;
     }
     
