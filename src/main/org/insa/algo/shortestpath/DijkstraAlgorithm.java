@@ -54,20 +54,34 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         boolean fin = false;
         Label currentLabel, nextLabel;
+        
+        //Observer function
+        notifyOriginProcessed(startingNode);
+        
         while (!tas.isEmpty() && !fin) {
         	
         	currentLabel = tas.deleteMin();
         	currentLabel.setMark(true);
         	
         	for (Arc arc : currentLabel.getNode().getSuccessors()) {
+        		//Petit test supplémentaire pour vérifier si l'on est autorisé à prendre le dit arc
+        		if (!data.isAllowed(arc)) {
+                    continue;
+                }
+        		
         		int nextId = arc.getDestination().getId();
         		nextLabel = labels.get(nextId);
         		if (nextLabel.isMarked()) {
         			continue;
         		}
         		
+        		//Observer function : Node is visited for the first time
+        		notifyNodeReached(arc.getDestination());
+        		
+        		//Creating the cost variable
         		double cout = Math.min(nextLabel.getCost(), currentLabel.getCost() + arc.getLength());
         		
+        		//Check wether we have to update the cost or not
         		if (cout != nextLabel.getCost()) {
             			nextLabel.setCost(cout);
             			nextLabel.setPrevious(arc.getOrigin());
@@ -75,7 +89,12 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             			tas.insert(nextLabel);
         		}
         		
-        		//if on a atteint la destination then fin = true
+        		//if we arrived at the last Node, exit the loop
+        		if (currentLabel.getNode() == destNode) {
+        			//Notify the observers : we're at the end
+        			notifyDestinationReached(destNode);
+        			fin = true;
+        		}
         	}
         }
         ShortestPathSolution solution = null;
