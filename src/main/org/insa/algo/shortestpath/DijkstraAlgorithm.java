@@ -29,9 +29,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         final int tailleGraphe = graph.size();
        
-       //Tableau de labels pour les modifier, tas de labels pour dérouler l'algo 
-        List<Node> predecessors = graph.getNodes();
+       //Tableau de labels pour les modifier
         ArrayList<Label> labels = new ArrayList<Label>();
+        //Tas de labels pour dérouler l'algo 
+        List<Node> predecessors = graph.getNodes();
+        
         BinaryHeap<Label> tas = new BinaryHeap<Label>();
         
         Node startingNode = data.getOrigin();
@@ -58,7 +60,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         boolean fin = false;
         Label currentLabel, nextLabel;
         
-        //Observer function
+        //Observer function: the algorithm is at first Node
         notifyOriginProcessed(startingNode);
         
         while (!tas.isEmpty() && !fin) {
@@ -66,6 +68,16 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	currentLabel = tas.deleteMin();
         	currentLabel.setMark(true);
         	
+        	//Observer function : Node is visited for the first time
+    		notifyNodeReached(currentLabel.getNode());
+    		
+        	//if we arrived at the last Node, exit the loop
+    		if (currentLabel.getNode() == destNode) {
+    			//Notify the observers : we're at the end
+    			notifyDestinationReached(destNode);
+    			fin = true;
+    		}
+    		
         	for (Arc arc : currentLabel.getNode().getSuccessors()) {
         		//Petit test supplémentaire pour vérifier si l'on est autorisé à prendre le dit arc
         		if (!data.isAllowed(arc)) {
@@ -74,12 +86,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         		
         		int nextId = arc.getDestination().getId();
         		nextLabel = labels.get(nextId);
+        		
         		if (nextLabel.isMarked()) {
         			continue;
         		}
-        		
-        		//Observer function : Node is visited for the first time
-        		notifyNodeReached(arc.getDestination());
         		
         		//Creating the cost variable
         		double cout = Math.min(nextLabel.getCost(), currentLabel.getCost() + arc.getLength());
@@ -93,12 +103,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                         predecessorArcs[arc.getDestination().getId()] = arc;
         		}
         		
-        		//if we arrived at the last Node, exit the loop
-        		if (currentLabel.getNode() == destNode) {
-        			//Notify the observers : we're at the end
-        			notifyDestinationReached(destNode);
-        			fin = true;
-        		}
         	}
         }
         ShortestPathSolution solution = null;
