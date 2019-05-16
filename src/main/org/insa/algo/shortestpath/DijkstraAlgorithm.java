@@ -25,38 +25,35 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     	//retrieve graph
         ShortestPathData data = getInputData();
         Graph graph = data.getGraph();
-        
-        
-        final int tailleGraphe = graph.size();
+        int tailleGraphe = graph.size();
        
-       //Tableau de labels pour les modifier
-        ArrayList<Label> labels = new ArrayList<Label>();
+        //Tableau de labels pour les modifier
+        Label[] labels = new Label[tailleGraphe];
         
         //Tas de labels pour dérouler l'algo 
         BinaryHeap<Label> tas = new BinaryHeap<Label>();
-        
-        //Tableau de prédecesseurs
-        Arc[] predecessors = new Arc[tailleGraphe];
         
         //Premier et dernier noeud
         Node startingNode = data.getOrigin();
         Node destNode = data.getDestination();
         
-        //initialize label array
+        /*//initialize label array
         
         for (int i = 0; i<tailleGraphe; i++) {
         	Node n = graph.getNodes().get(i);
         	labels.add(i, new Label(n));
         	tas.insert(new Label(n));
-        }
+        }*/
+        
         
         //initialisation du sommet du tas
         Label startingLabel = new Label(startingNode);
         startingLabel.setCost(0);
         tas.insert(startingLabel);
+        labels[startingNode.getId()] = startingLabel;
         
         //initialize arc array for sortest path
-        Arc[] predecessorArcs = new Arc[graph.size()];
+        Arc[] predecessorArcs = new Arc[tailleGraphe];
         
         //actual algorithm
         
@@ -68,54 +65,76 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         while (!tas.isEmpty() && !fin) {
         	
+        	//Definition of the current label for later use
         	currentLabel = tas.deleteMin();
-        	currentLabel.setMark(true);
         	
         	//Observer function : Node is visited for the first time
     		notifyNodeReached(currentLabel.getNode());
     		
+    		//We mark the label as we're visiting it
+        	currentLabel.setMark(true);
+    		
         	//if we arrived at the last Node, exit the loop
     		if (currentLabel.getNode() == destNode) {
-    			//Notify the observers : we're at the end
-    			notifyDestinationReached(destNode);
     			fin = true;
     		}
     		
         	for (Arc arc : currentLabel.getNode().getSuccessors()) {
-        		//Petit test supplémentaire pour vérifier si l'on est autorisé à prendre le dit arc
+        		//Small complementary test to check if we're allowed to take this path
         		if (!data.isAllowed(arc)) {
                     continue;
                 }
         		
-        		int nextId = arc.getDestination().getId();
-        		nextLabel = labels.get(nextId);
+        		//Definition of the current following Node & associated Label for later use
+        		Node followingNode = arc.getDestination();
+        		int nextId = followingNode.getId();
+        		nextLabel = labels[nextId];
         		
-        		if (nextLabel.isMarked()) {
-        			continue;
+        		if (nextLabel == null) {
+        			//Notify the observers : we've reached a new Node
+        			notifyNodeReached(arc.getDestination());
+        			
+        			//Creating a new Label for the table
+					nextLabel = new Label(followingNode);
+					labels[nextLabel.getNode().getId()] = nextLabel;
         		}
         		
-        		//Creating the cost variable
-        		double cout = Math.min(nextLabel.getCost(), currentLabel.getCost() + arc.getLength());
-        		
-        		//Check wether we have to update the cost or not
-        		if (cout != nextLabel.getCost()) {
-            			nextLabel.setCost(cout);
-            			nextLabel.setPrevious(arc.getOrigin());
-            			labels.set(nextId, nextLabel);
-            			tas.insert(nextLabel);
-                        predecessorArcs[arc.getDestination().getId()] = arc;
-        		}
-        		
+        		if (!nextLabel.isMarked()) {
+        			
+        			//Creating the cost variable
+        			double nextLabelCost = nextLabel.getCost();
+        			double currentLabelCost = currentLabel.getCost();
+            		double cost = Math.min(nextLabelCost, currentLabelCost + (float)data.getCost(arc));
+            		
+            		//Check wether we have to update the cost or not
+        			if(cost != nextLabelCost || (nextLabelCost==Float.POSITIVE_INFINITY)){
+        				//Update the cost
+        				nextLabel.setCost(cost);
+        				nextLabel.setPrevious(currentLabel.getNode());
+        				
+						//If the next label is already in the label BH, remove it
+						if(nextLabel.isDansTas()) {
+							tas.remove(nextLabel);
+						}
+						//If it is not, put it in
+						else {
+							nextLabel.setDansTas();
+						}
+						
+						tas.insert(nextLabel);
+						
+						//Update the arc list for the final solution
+						predecessorArcs[arc.getDestination().getId()] = arc;
+					}
+        		}   		
         	}
         }
         ShortestPathSolution solution = null;
 
         // Destination has no predecessor, the solution is infeasible...
-        if (labels.get(destNode.getId()).getPrevious() == null) {
+        if (labels[destNode.getId()].getPrevious() == null) {
             solution = new ShortestPathSolution(data, Status.INFEASIBLE);
         }
-        
-        //faut reprendre à partir d'ici : c'est la fin de bellman ford faut juste un peu modifier
         
         else {
 
@@ -124,10 +143,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
             // Create the path from the array of predecessors...
             ArrayList<Arc> arcs = new ArrayList<>();
-            Node node = destNode;
-            while (node != null) {
-                arcs.add(predecessorArcs[labels.get(node.getId()).getPrevious().getId()]);
-                node = labels.get(node.getId()).getPrevious();
+            Arc arc = predecessorArcs[destNode.getId()];
+            
+            while (arc != null) {
+                arcs.add(arc);
+                arc = predecessorArcs[arc.getOrigin().getId()];
             }
             
             // Reverse the path...
