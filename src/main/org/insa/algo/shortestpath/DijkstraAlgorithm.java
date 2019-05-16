@@ -50,6 +50,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         startingLabel.setCost(0);
         tas.insert(startingLabel);
         
+        //initialize arc array for sortest path
+        Arc[] predecessorArcs = new Arc[graph.size()];
+        
         //actual algorithm
         
         boolean fin = false;
@@ -87,6 +90,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             			nextLabel.setPrevious(arc.getOrigin());
             			labels.set(nextId, nextLabel);
             			tas.insert(nextLabel);
+                        predecessorArcs[arc.getDestination().getId()] = arc;
         		}
         		
         		//if we arrived at the last Node, exit the loop
