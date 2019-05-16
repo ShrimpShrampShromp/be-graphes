@@ -32,7 +32,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
        //Tableau de labels pour les modifier
         ArrayList<Label> labels = new ArrayList<Label>();
         //Tas de labels pour dérouler l'algo 
-        List<Node> predecessors = graph.getNodes();
         
         BinaryHeap<Label> tas = new BinaryHeap<Label>();
         
@@ -121,12 +120,12 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
             // Create the path from the array of predecessors...
             ArrayList<Arc> arcs = new ArrayList<>();
-            Arc arc = predecessorArcs[data.getDestination().getId()];
-            while (arc != null) {
-                arcs.add(arc);
-                arc = predecessorArcs[arc.getOrigin().getId()];
+            Node node = destNode;
+            while (node != null) {
+                arcs.add(predecessorArcs[labels.get(node.getId()).getPrevious().getId()]);
+                node = labels.get(node.getId()).getPrevious();
             }
-
+            
             // Reverse the path...
             Collections.reverse(arcs);
 
