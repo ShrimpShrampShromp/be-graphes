@@ -31,10 +31,14 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
        
        //Tableau de labels pour les modifier
         ArrayList<Label> labels = new ArrayList<Label>();
-        //Tas de labels pour dérouler l'algo 
         
+        //Tas de labels pour dérouler l'algo 
         BinaryHeap<Label> tas = new BinaryHeap<Label>();
         
+        //Tableau de prédecesseurs
+        Arc[] predecessors = new Arc[tailleGraphe];
+        
+        //Premier et dernier noeud
         Node startingNode = data.getOrigin();
         Node destNode = data.getDestination();
         
