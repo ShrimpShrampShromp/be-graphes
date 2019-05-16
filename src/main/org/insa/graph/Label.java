@@ -1,5 +1,4 @@
 package org.insa.graph;
-import org.insa.algo.utils.*;
 
 public class Label implements Comparable<Label>{
 	private Node currentNode;
