@@ -1,8 +1,6 @@
 package org.insa.algo.shortestpath;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import org.insa.algo.AbstractSolution.Status;
 import org.insa.graph.Arc;
@@ -35,19 +33,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         //Premier et dernier noeud
         Node startingNode = data.getOrigin();
-        Node destNode = data.getDestination();
-        
-        /*//initialize label array
-        
-        for (int i = 0; i<tailleGraphe; i++) {
-        	Node n = graph.getNodes().get(i);
-        	labels.add(i, new Label(n));
-        	tas.insert(new Label(n));
-        }*/
-        
+        Node destNode = data.getDestination();        
         
         //initialisation du sommet du tas
-        Label startingLabel = new Label(startingNode);
+        Label startingLabel = createNewLabel(startingNode, data);
         startingLabel.setCost(0);
         tas.insert(startingLabel);
         labels[startingNode.getId()] = startingLabel;
@@ -95,7 +84,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         			notifyNodeReached(arc.getDestination());
         			
         			//Creating a new Label for the table
-					nextLabel = new Label(followingNode);
+					nextLabel = createNewLabel(followingNode, data);
 					labels[nextLabel.getNode().getId()] = nextLabel;
         		}
         		
@@ -159,5 +148,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         return solution;
     }
     
+    //Create and return a new Label associated to the Node. This method is redefined in the AStarAlgorithm class.
+    protected Label createNewLabel(Node n, ShortestPathData data) {
+    	Label l = new Label(n);
+    	return l;
+    }
     
 }

@@ -2,7 +2,7 @@ package org.insa.graph;
 import org.insa.algo.shortestpath.ShortestPathData;
 import org.insa.algo.AbstractInputData;
 
-public class LabelStar extends Label{
+public class LabelStar extends Label implements Comparable<Label>{
 	
 	double borneInf = 0;
 	public LabelStar(Node N, ShortestPathData data) {
@@ -16,5 +16,10 @@ public class LabelStar extends Label{
 		
 	}
 	
+	@Override
+	//Redefine the getCost method, in order to guarantee our new ordering condition in the binary heap
+	public double getCost() {
+		return this.borneInf + this.cost;
+	}
 	
 }

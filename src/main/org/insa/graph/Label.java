@@ -51,7 +51,14 @@ public class Label implements Comparable<Label>{
 		return this.dansTas;
 	}
 	
+	/*This method is used in the binary heap class
+	 * The only thing it needs to return is -1, 0 or 1, depending on which cost is higher
+	 */
 	public int compareTo(Label L) {
-		return (int)(this.cost - L.getCost());
+		int retour = 0;
+		if (this.cost > L.getCost()) retour = 1;
+		else if (this.cost == L.getCost()) retour = 0;
+		else if (this.cost < L.getCost()) retour = -1;
+		return retour;
 	}
 }
