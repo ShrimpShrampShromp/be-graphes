@@ -97,6 +97,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             		
             		//Check wether we have to update the cost or not
         			if(cost != nextLabelCost || (nextLabelCost==Float.POSITIVE_INFINITY)){
+        				
         				//Update the cost
         				nextLabel.setCost(cost);
         				nextLabel.setPrevious(currentLabel.getNode());
@@ -105,6 +106,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 						if(nextLabel.isDansTas()) {
 							tas.remove(nextLabel);
 						}
+						
 						//If it is not, put it in
 						else {
 							nextLabel.setDansTas();

@@ -8,10 +8,11 @@ public class LabelStar extends Label implements Comparable<Label>{
 	public LabelStar(Node N, ShortestPathData data) {
 		super(N);
 		if (data.getMode() == AbstractInputData.Mode.LENGTH) {
-			this.borneInf = this.getNode().getPoint().distanceTo(data.getDestination().getPoint());
+			this.borneInf = (float)Point.distance(N.getPoint(),data.getDestination().getPoint());
 		}
 		else if (data.getMode() == AbstractInputData.Mode.TIME) {
-			this.borneInf = this.getNode().getPoint().distanceTo(data.getDestination().getPoint())/data.getMaximumSpeed();
+			int maxSpeed = Math.max(data.getMaximumSpeed(), data.getGraph().getGraphInformation().getMaximumSpeed());
+			this.borneInf = (float)Point.distance(N.getPoint(),data.getDestination().getPoint())/(maxSpeed*1000.0f/3600.0f);
 		}
 		
 	}
