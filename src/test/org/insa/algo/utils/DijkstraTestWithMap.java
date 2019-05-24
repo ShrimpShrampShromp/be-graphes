@@ -31,30 +31,28 @@ public class DijkstraTestWithMap {
 		Graph graph = reader.read();
 
 		if (typeEvaluation!=0 && typeEvaluation!=1) {
-			System.out.println("Argument invalide");
+			System.out.println("Invalid argument");
 		} else {
 			if (origine<0 || destination<0 || origine>=(graph.size()-1) || destination>=(graph.size()-1)) { // On est hors du graphe. / Sommets inexistants
-				System.out.println("ERREUR : Paramètres invalides ");
+				System.out.println("ERROR : Invalid parameters");
 				
 			} else {
 				ArcInspector arcInspectorDijkstra;
 				
 				if (typeEvaluation == 0) { //Temps
-					System.out.println("Mode : Temps");
+					System.out.println("MODE : TIME");
 					arcInspectorDijkstra = ArcInspectorFactory.getAllFilters().get(2);
 				} else {
-					System.out.println("Mode : Distance");
+					System.out.println("MODE : DIISTANCE");
 					arcInspectorDijkstra = ArcInspectorFactory.getAllFilters().get(0);
 				}
 				
-				
-				//System.out.println("Chemin de la carte : "+mapName);
-				System.out.println("Origine : " + origine);
-				System.out.println("Destination : " + destination);
+				System.out.println("ORIGIN : " + origine);
+				System.out.println("DESTINATION : " + destination);
 				
 				if(origine==destination) {
-					System.out.println("Origine et Destination identiques");
-					System.out.println("Cout solution: 0");
+					System.out.println("ORIGIN AND DESTINATION ARE THE SAME");
+					System.out.println("SOLUTION'S COST : 0");
 					
 				} else {			
 					ShortestPathData data = new ShortestPathData(graph, graph.get(origine),graph.get(destination), arcInspectorDijkstra);
@@ -70,7 +68,7 @@ public class DijkstraTestWithMap {
 					if (solution.getPath() == null) {
 						assertEquals(expected.getPath(), solution.getPath());
 						System.out.println("NO SOLUTION");
-						System.out.println("(infini) ");
+						System.out.println("(infinite)");
 					}
 					// Un plus court chemin trouve 
 					else {
@@ -85,7 +83,7 @@ public class DijkstraTestWithMap {
 							costExpected = expected.getPath().getLength();
 						}
 						assertEquals(costExpected, costSolution, 0.001);
-						System.out.println("Cout solution: " + costSolution);
+						System.out.println("SOLUTION COST: " + costSolution);
 					}
 				}
 			}
@@ -113,15 +111,15 @@ public class DijkstraTestWithMap {
 		Graph graph = reader.read();
 
 		if (origine<0 || destination<0 || origine>=(graph.size()-1) || destination>=(graph.size()-1)) { // On est hors du graphe. / Sommets inexistants
-			System.out.println("ERREUR : Paramètres invalides ");
+			System.out.println("ERROR : invalid parameters");
 			
 		} else {
-			System.out.println("Origine : " + origine);
-			System.out.println("Destination : " + destination);
+			System.out.println("ORIGIN : " + origine);
+			System.out.println("DESTINATION : " + destination);
 			
 			if(origine==destination) {
-				System.out.println("Origine et Destination identiques");
-				System.out.println("Tous les couts sont � 0.");
+				System.out.println("ORIGIN AND DESTINATION ARE THE SAME");
+				System.out.println("All costs are set to 0.");
 				
 			} else {
 		
@@ -137,7 +135,7 @@ public class DijkstraTestWithMap {
 		
 				/* Pas de chemin trouve */
 				if (solution.getPath() == null) {
-					System.out.println("PAS DE CHEMIN SOLUTION EN TEMPS");
+					System.out.println("NO PATH WAS FOUND");
 				}
 				/* Un plus court chemin trouve */
 				else {
@@ -160,7 +158,7 @@ public class DijkstraTestWithMap {
 	
 				/* Pas de chemin trouve */
 				if (solution.getPath() == null) {
-					System.out.println("PAS DE CHEMIN SOLUTION EN DISTANCE");
+					System.out.println("NO PATH WAS FOUND");
 				}
 				/* Un plus court chemin trouve */
 				else {				
@@ -172,13 +170,13 @@ public class DijkstraTestWithMap {
 			
 				/* Verifie que le temps du chemin le plus rapide est inferieur au temps du chemin le plus court */
 				assertTrue(costFastestSolutionInTime <= costShortestSolutionInTime);
-				System.out.println("Cout en temps du chemin le plus rapide : " + costFastestSolutionInTime);
-				System.out.println("Cout en temps du chemin le plus court  : " + costShortestSolutionInTime);
+				System.out.println("SHORTEST PATH'S COST : " + costFastestSolutionInTime);
+				System.out.println("FASTEST PATH'S COST  : " + costShortestSolutionInTime);
 		
 				/* Et verifie que la distance du chemin le plus rapide est superieur a la distance du chemin le plus court */
 				assertTrue(costFastestSolutionInDistance >= costShortestSolutionInDistance);
-				System.out.println("Cout en distance du chemin le plus rapide : " + costFastestSolutionInDistance);
-				System.out.println("Cout en distance du chemin le plus court  : " + costShortestSolutionInDistance);
+				System.out.println("SHORTEST PATH'S COST : " + costFastestSolutionInDistance);
+				System.out.println("FASTEST PATH'S COST  : " + costShortestSolutionInDistance);
 	
 			}
 		}
