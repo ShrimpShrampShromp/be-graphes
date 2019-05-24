@@ -20,6 +20,11 @@ public class Label implements Comparable<Label>{
 		return this.cost;
 	}
 	
+	//Returns the total cost of the current Label
+	public double getTotalCost() {
+		return this.cost;
+	}
+	
 	//Returns the Node to which the current label is associated
 	public Node getNode() {
 		return this.currentNode;
@@ -61,13 +66,16 @@ public class Label implements Comparable<Label>{
 	}
 	
 	/*This method is used in the binary heap class
-	 * The only thing it needs to return is -1, 0 or 1, depending on which cost is higher
+	 * The only thing it needs to return is 1 or -1, depending on which cost is higher
 	 */
 	public int compareTo(Label L) {
 		int retour = 0;
-		if (this.cost > L.getCost()) retour = 1;
-		else if (this.cost == L.getCost()) retour = 0;
-		else if (this.cost < L.getCost()) retour = -1;
+		if (this.getTotalCost() > L.getTotalCost()) retour = 1;
+		else if (this.getTotalCost() == L.getTotalCost()) {
+			if (this.cost > L.cost) retour = 1;
+			else if (this.cost < L.cost) retour = -1;
+		}
+		else if (this.getTotalCost() < L.getTotalCost()) retour = -1;
 		return retour;
 	}
 }

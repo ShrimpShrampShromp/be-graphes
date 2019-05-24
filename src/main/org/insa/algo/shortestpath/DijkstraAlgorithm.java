@@ -37,16 +37,17 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         //initialisation du sommet du tas
         Label startingLabel = createNewLabel(startingNode, data);
+        Label destLabel = createNewLabel(destNode, data);
         startingLabel.setCost(0);
         tas.insert(startingLabel);
         labels[startingNode.getId()] = startingLabel;
-        
+        labels[destNode.getId()] = destLabel;
         //initialize arc array for sortest path
         Arc[] predecessorArcs = new Arc[tailleGraphe];
         
         //actual algorithm
-        
         boolean fin = false;
+        boolean impossible = false;
         Label currentLabel, nextLabel;
         
         //Observer function: the algorithm is at first Node
@@ -127,6 +128,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             solution = new ShortestPathSolution(data, Status.INFEASIBLE);
         }
         
+        // Destination non reachable, the solution is infeasible...
+        else if (impossible == true) {
+            solution = new ShortestPathSolution(data, Status.INFEASIBLE);
+        }
+        
         else {
 
             // The destination has been found, notify the observers.
@@ -145,7 +151,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             Collections.reverse(arcs);
 
             // Create the final solution.
-            solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
+            Path solutionPath = new Path(graph, arcs);
+            solution = new ShortestPathSolution(data, Status.OPTIMAL, solutionPath);
+            
+            //Test the solution with the use of the path class' methods
+            
         }    
         return solution;
     }
