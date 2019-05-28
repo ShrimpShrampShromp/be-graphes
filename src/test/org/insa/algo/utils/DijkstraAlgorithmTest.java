@@ -122,8 +122,8 @@ public class DijkstraAlgorithmTest {
 	public void testDoScenarioDistanceBretagne() throws Exception {
 		
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/bretagne.mapgr";
-		//String mapName = "E:\cartes\bretagne.mapgr";
-		String mapName = "D:\\Cours\\Cartes\\bretagne.mapgr";
+		String mapName = "E:\\cartes\\bretagne.mapgr";
+		//String mapName = "D:\\Cours\\Cartes\\bretagne.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
 		int origine;
@@ -175,8 +175,8 @@ public class DijkstraAlgorithmTest {
 	@Test
 	public void testDoScenarioTempsBretagne() throws Exception {
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/bretagne.mapgr";
-		//String mapName = "E:\cartes\bretagne.mapgr";
-		String mapName = "D:\\Cours\\Cartes\\bretagne.mapgr";
+		String mapName = "E:\\cartes\\bretagne.mapgr";
+		//String mapName = "D:\\Cours\\Cartes\\bretagne.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
 		int origine;
@@ -224,8 +224,8 @@ public class DijkstraAlgorithmTest {
 	public void testDoScenarioDistanceINSA() throws Exception {
 
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
-		//String mapName = "E:\cartes\insa.mapgr";
-		String mapName = "D:\\Cours\\Cartes\\insa.mapgr";
+		String mapName = "E:\\cartes\\insa.mapgr";
+		//String mapName = "D:\\Cours\\Cartes\\insa.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
 		int origine;
@@ -268,8 +268,8 @@ public class DijkstraAlgorithmTest {
 	@Test
 	public void testDoScenarioTempsINSA() throws Exception {
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
-		//String mapName = "E:\cartes\insa.mapgr";
-		String mapName = "D:\\Cours\\Cartes\\insa.mapgr";
+		String mapName = "E:\\cartes\\insa.mapgr";
+		//String mapName = "D:\\Cours\\Cartes\\insa.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
 		int origine;
@@ -313,8 +313,8 @@ public class DijkstraAlgorithmTest {
 	public void testDoScenarioDistanceCarreDense() throws Exception {
 
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/carre-dense.mapgr";
-		//String mapName = "E:\cartes\carre-dense.mapgr";
-		String mapName = "D:\\Cours\\Cartes\\carre-dense.mapgr";
+		String mapName = "E:\\cartes\\carre-dense.mapgr";
+		//String mapName = "D:\\Cours\\Cartes\\carre-dense.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
 		int origine;
@@ -333,8 +333,8 @@ public class DijkstraAlgorithmTest {
 	@Test
 	public void testDoScenarioTempsCarreDense() throws Exception {
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/carre-dense.mapgr";
-		//String mapName = "E:\cartes\carre-dense.mapgr";
-		String mapName = "D:\\Cours\\Cartes\\carre-dense.mapgr";
+		String mapName = "E:\\cartes\\carre-dense.mapgr";
+		//String mapName = "D:\\Cours\\Cartes\\carre-dense.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
 		int origine;
