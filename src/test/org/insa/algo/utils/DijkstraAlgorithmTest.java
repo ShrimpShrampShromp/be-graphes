@@ -122,7 +122,9 @@ public class DijkstraAlgorithmTest {
 	public void testDoScenarioDistanceBretagne() throws Exception {
 		
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/bretagne.mapgr";
+		//String mapName = "E:\cartes\bretagne.mapgr";
 		String mapName = "D:\\Cours\\Cartes\\bretagne.mapgr";
+		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
 		int origine;
 		int destination;
@@ -173,6 +175,7 @@ public class DijkstraAlgorithmTest {
 	@Test
 	public void testDoScenarioTempsBretagne() throws Exception {
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/bretagne.mapgr";
+		//String mapName = "E:\cartes\bretagne.mapgr";
 		String mapName = "D:\\Cours\\Cartes\\bretagne.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
@@ -221,6 +224,7 @@ public class DijkstraAlgorithmTest {
 	public void testDoScenarioDistanceINSA() throws Exception {
 
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
+		//String mapName = "E:\cartes\insa.mapgr";
 		String mapName = "D:\\Cours\\Cartes\\insa.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
@@ -264,6 +268,7 @@ public class DijkstraAlgorithmTest {
 	@Test
 	public void testDoScenarioTempsINSA() throws Exception {
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
+		//String mapName = "E:\cartes\insa.mapgr";
 		String mapName = "D:\\Cours\\Cartes\\insa.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
@@ -308,6 +313,7 @@ public class DijkstraAlgorithmTest {
 	public void testDoScenarioDistanceCarreDense() throws Exception {
 
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/carre-dense.mapgr";
+		//String mapName = "E:\cartes\carre-dense.mapgr";
 		String mapName = "D:\\Cours\\Cartes\\carre-dense.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
@@ -327,6 +333,7 @@ public class DijkstraAlgorithmTest {
 	@Test
 	public void testDoScenarioTempsCarreDense() throws Exception {
 		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/carre-dense.mapgr";
+		//String mapName = "E:\cartes\carre-dense.mapgr";
 		String mapName = "D:\\Cours\\Cartes\\carre-dense.mapgr";
 		
 		DijkstraTestWithMap test = new  DijkstraTestWithMap();
@@ -343,53 +350,4 @@ public class DijkstraAlgorithmTest {
 		test.testScenario(mapName,0,origine,destination); 			
 	}
 
-	@Test
-	public void testDoScenarioMinTempsDistBretagne() throws Exception {
-		//String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/bretagne.mapgr";
-		String mapName = "D:\\Cours\\Cartes\\bretagne.mapgr";
-		
-		DijkstraTestWithMap test = new  DijkstraTestWithMap();
-		int origine;
-		int destination;
-		
-		System.out.println("---------------TESTS MADE WITHOUT ORACLE---------------");
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("               CURRENT MAP : BRETAGNE");
-		System.out.println();
-
-		System.out.println("|... NO PATH ...|");
-		origine = 0 ;
-		destination = 0;
-		test.testScenarioSansOracle(mapName,origine,destination);    
-		
-		System.out.println("|... SIMPLE PATH ...|");
-		origine = 143909;
-		destination = 75535;
-		test.testScenarioSansOracle(mapName,origine,destination);    	
-	
-		System.out.println("|... NON CONNECTED PATH ...|");
-		origine = 126449;
-		destination = 29331;
-		test.testScenarioSansOracle(mapName,origine,destination);  
-		
-		System.out.println("|... NON EXISTING NODES ...|");
-		System.out.println("|...     NO ORIGIN      ...|");
-		origine = -1;
-		destination = 75535;
-		test.testScenarioSansOracle(mapName,origine,destination);     	
-
-		System.out.println("|... NON EXISTING NODES ...|");
-		System.out.println("|...   NO DESTINATION   ...|");
-		origine = 143909;
-		destination = 1000000000;
-		test.testScenarioSansOracle(mapName,origine,destination);    	
-		
-		System.out.println("|... NON EXISTING NODES ...|");
-		System.out.println("|...      NOTHING       ...|");
-		origine = -1;
-		destination = 1000000000;
-		test.testScenarioSansOracle(mapName,origine,destination); 
-	}
 }
