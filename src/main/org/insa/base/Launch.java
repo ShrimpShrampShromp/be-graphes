@@ -45,6 +45,9 @@ public class Launch {
     }
 
     public static void main(String[] args) throws Exception {
+    	
+    	PerfTest test_wagadoogoo = new PerfTest("wagadoogoo", 100); //inserer data
+    	test_wagadoogoo.generateTests();
 
         // Visit these directory to see the list of available files on Commetud.
         String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
