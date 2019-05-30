@@ -28,12 +28,13 @@ public class PerfTest {
 	
 	private int iters;
 	
-	public PerfTest(ShortestPathData data, int iters){
-		this.nom_carte = data.toString();
+	public PerfTest(String string, int iters){
+		this.nom_carte = string.toString();
 		this.iters = iters;
 	}
 
-    public void generateTests() {
+
+	public void generateTests() {
     	BufferedWriter distanceWriter = null;
     	BufferedWriter timeWriter = null;
         try {

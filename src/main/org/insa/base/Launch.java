@@ -17,6 +17,7 @@ import org.insa.graph.io.GraphReader;
 import org.insa.graph.io.PathReader;
 import org.insa.graphics.drawing.Drawing;
 import org.insa.graphics.drawing.components.BasicDrawing;
+import org.insa.base.PerfTest;
 
 public class Launch {
 
