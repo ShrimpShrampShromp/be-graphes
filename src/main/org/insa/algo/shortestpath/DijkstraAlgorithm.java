@@ -12,7 +12,8 @@ import org.insa.algo.utils.BinaryHeap;
 
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
-
+	protected int sommetsVisites = 0;
+	
     public DijkstraAlgorithm(ShortestPathData data) {
         super(data);
     }
@@ -20,6 +21,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     @Override
     protected ShortestPathSolution doRun() {
     	
+    	sommetsVisites = 0;
     	//retrieve graph
         ShortestPathData data = getInputData();
         Graph graph = data.getGraph();
@@ -81,6 +83,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         		nextLabel = labels[nextId];
         		
         		if (nextLabel == null) {
+        			sommetsVisites++;
+        			
         			//Notify the observers : we've reached a new Node
         			notifyNodeReached(arc.getDestination());
         			

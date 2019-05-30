@@ -66,7 +66,7 @@ public class DijkstraAlgorithmTest {
 
 	@Test
 	public void testDoRun() {
-		System.out.println("               VALIDITY TESTS WITH SIMPLE GRAPHS               ");
+		System.out.println("               VALIDITY TESTS WITH A SIMPLE GRAPH               ");
 
 		for (int i=0;  i < nodes.length; ++i) {
 

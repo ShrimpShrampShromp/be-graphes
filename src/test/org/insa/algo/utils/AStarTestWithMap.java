@@ -1,5 +1,4 @@
 package org.insa.algo.utils;
-
 import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedInputStream;
@@ -15,8 +14,7 @@ import org.insa.algo.shortestpath.*;
 
 import org.junit.Test;
 
-public class DijkstraTestWithMap {
-
+public class AStarTestWithMap {
 	@Test
 	// MODE : 0 = TIME, 1 = LENGTH
 	public void testScenario(String mapName, int typeEvaluation, int origine, int destination) throws Exception {
@@ -55,12 +53,12 @@ public class DijkstraTestWithMap {
 				} else {			
 					ShortestPathData data = new ShortestPathData(graph, graph.get(origine),graph.get(destination), arcInspectorDijkstra);
 		
-					BellmanFordAlgorithm B = new BellmanFordAlgorithm(data);
+					AStarAlgorithm A = new AStarAlgorithm(data);
 					DijkstraAlgorithm D = new DijkstraAlgorithm(data);
 					
-					// Getting the Bellman & Dijkstra solutions for comparison
-					ShortestPathSolution solution = D.run();
-					ShortestPathSolution expected = B.run();
+					// Getting the AStar & Dijkstra solutions for comparison
+					ShortestPathSolution solution = A.run();
+					ShortestPathSolution expected = D.run();
 	
 					
 					if (solution.getPath() == null) {
