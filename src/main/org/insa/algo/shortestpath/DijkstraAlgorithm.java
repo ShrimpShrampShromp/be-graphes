@@ -19,7 +19,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     }
     
     @Override
-    protected ShortestPathSolution doRun() {
+    public ShortestPathSolution doRun() {
     	
     	sommetsVisites = 0;
     	//retrieve graph
@@ -156,6 +156,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
             // Create the final solution.
             Path solutionPath = new Path(graph, arcs);
+            data.setVisitedNodes(sommetsVisites);
             solution = new ShortestPathSolution(data, Status.OPTIMAL, solutionPath);
             
             //Test the solution with the use of the path class' methods

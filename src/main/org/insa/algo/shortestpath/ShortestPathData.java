@@ -9,6 +9,9 @@ public class ShortestPathData extends AbstractInputData {
 
     // Origin and destination nodes.
     private final Node origin, destination;
+    
+    //number of explored nodes
+    private int visitedNodes;
 
     /**
      * Construct a new instance of ShortestPathInputData with the given parameters.
@@ -37,6 +40,14 @@ public class ShortestPathData extends AbstractInputData {
      */
     public Node getDestination() {
         return destination;
+    }
+    
+    public void setVisitedNodes(int nb) {
+    	visitedNodes = nb;
+    }
+    
+    public int getVisitedNodes() {
+    	return visitedNodes;
     }
 
     @Override

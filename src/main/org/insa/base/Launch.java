@@ -46,13 +46,11 @@ public class Launch {
     }
 
     public static void main(String[] args) throws Exception {
-    	
-    	PerfTest test_wagadoogoo = new PerfTest("wagadoogoo", 100); //inserer data
-    	test_wagadoogoo.generateTests();
+    
 
         // Visit these directory to see the list of available files on Commetud.
-        String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
-        String pathName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Paths/path_fr31insa_rangueil_r2.path";
+        String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/bretagne.mapgr";
+        //String pathName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Paths/path_fr31insa_rangueil_r2.path";
 
         // Create a graph reader.
         GraphReader reader = new BinaryGraphReader(
@@ -61,20 +59,26 @@ public class Launch {
         // TODO: Read the graph.
         Graph graph = reader.read();
 
+    	PerfTest test = new PerfTest(graph, 100);
+    	test.generateTests();
+    	test.runTests('d');
+    	test.runTests('a');
+    	
+        
         // Create the drawing:
-        Drawing drawing = createDrawing();
+        //Drawing drawing = createDrawing();
 
         // TODO: Draw the graph on the drawing.
-        drawing.drawGraph(graph);
+        //drawing.drawGraph(graph);
 
         // TODO: Create a PathReader.
-        PathReader pathReader = new BinaryPathReader(new DataInputStream(new BufferedInputStream(new FileInputStream(pathName))));
+        //PathReader pathReader = new BinaryPathReader(new DataInputStream(new BufferedInputStream(new FileInputStream(pathName))));
 
         // TODO: Read the path.
-        Path path = pathReader.readPath(graph);
+        //Path path = pathReader.readPath(graph);
 
         // TODO: Draw the path.
-        drawing.drawPath(path);
+        //drawing.drawPath(path);
 
     }
 
